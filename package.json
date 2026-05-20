@@ -6,13 +6,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "update": "cd update && launcher @banner.js && launcher fetch-data.js"
+    "update": "cd update && cat @BANNER && launcher fetch-data.js"
   },
   "bin": {
     "useragent": "./index.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "json5": "^2.2.3",
-    "right-tool": "^1.2.1"
+    "right-tool": "^1.2.5"
   }
 }
