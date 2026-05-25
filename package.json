@@ -1,7 +1,7 @@
 {
   "name": "user-agent-stealth",
   "description": "randomize or target specific platform, os or browser and generate all relevant headers",
-  "version": "20.26.05",
+  "version": "20.26.06",
   "type": "module",
   "main": "index.js",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "bin": {
     "useragent": "./index.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "json5": "^2.2.3",
     "right-tool": "^1.2.1"
   }
