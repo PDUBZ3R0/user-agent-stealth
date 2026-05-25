@@ -1,4 +1,4 @@
-# ua-generator
+# user-agent-stealth (update generator build)
 
 Generates realistic browser headers (User-Agent, Sec-CH-UA, Sec-Fetch-*, Accept-*) using real StatCounter market share data, weighted by what people actually use.
 

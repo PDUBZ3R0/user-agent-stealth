@@ -11,8 +11,8 @@
   "bin": {
     "useragent": "./index.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "json5": "^2.2.3",
-    "right-tool": "^1.2.5"
+    "right-tool": "^1.2.1"
   }
 }

@@ -29,12 +29,14 @@ You can also call from the command line, installs a `useragent` command:
 ```bash
 pdubz3r0@B3T4M4X:~/Development/user-agent-stealth$ useragent
 {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0',
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0.0 Safari/537.36',
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
   'Accept-Language': 'en-US,en;q=0.9',
   'Accept-Encoding': 'gzip, deflate, br, zstd',
   'Upgrade-Insecure-Requests': '1',
-  'Sec-CH-UA': '"Microsoft Edge";v="147", "Chromium";v="147", "Not?A_Brand";v="24"',
+  'Cache-Control': 'max-age=0',
+  Priority: 'u=0, i',
+  'Sec-CH-UA': '"Google Chrome";v="147.0", "Chromium";v="147.0", "Not?A_Brand";v="24"',
   'Sec-CH-UA-Mobile': '?0',
   'Sec-CH-UA-Platform': '"Windows"',
   'Sec-CH-UA-Arch': '"x86"',
@@ -43,4 +45,5 @@ pdubz3r0@B3T4M4X:~/Development/user-agent-stealth$ useragent
   'Sec-Fetch-Dest': 'document',
   'Sec-Fetch-User': '?1'
 }
+
 ```

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import zlib from "node:zlib"
 import path from 'node:path'
 import fs from 'node:fs'
 
@@ -338,40 +339,40 @@ class UAGenerator {
   /**
    * Build Sec-Fetch-* headers based on HTTP method.
    */
-  buildFetchHeaders(method = 'GET') {
-    const m = method.toUpperCase();
-    // Top-level navigation defaults
-    const headers = {
-      'Sec-Fetch-Site': 'none',
-      'Sec-Fetch-Mode': 'navigate',
-      'Sec-Fetch-Dest': 'document',
-      'Sec-Fetch-User': '?1'
-    };
-    if (m === 'POST') {
-      // POSTs are typically form submits or fetch API calls
-      headers['Sec-Fetch-Site'] = 'same-origin';
-      headers['Sec-Fetch-Mode'] = 'cors';
-      headers['Sec-Fetch-Dest'] = 'empty';
-      delete headers['Sec-Fetch-User'];
-    } else if (m === 'HEAD') {
-      // HEAD is rarely browser-initiated; treat as cors
-      headers['Sec-Fetch-Site'] = 'same-origin';
-      headers['Sec-Fetch-Mode'] = 'cors';
-      headers['Sec-Fetch-Dest'] = 'empty';
-      delete headers['Sec-Fetch-User'];
+  buildFetchHeaders(method = 'GET') { 
+    if (method.toUpperCase() === 'POST') {
+      return {
+        'Sec-Fetch-Site': 'same-origin',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Dest': 'empty'
+      }
+    } else {
+      return {
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-User': '?1'
+      }
     }
-    return headers;
   }
 
   /**
    * Build Accept-* headers (always present in real browsers).
    */
   buildAcceptHeaders({ browser, os }) {
+    // If the current node zlib can support zstd we add it, otherwise we omit it. That way the response
+    // that comes back if these headers are used will most certainly be able to be decoded.
+ 
+    let encodings = 'gzip, deflate, br'
+    if (typeof zlib.createZstdDecompress === 'function') encodings += ', zstd'
+
     return {
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
       'Accept-Language': 'en-US,en;q=0.9',
-      'Accept-Encoding': 'gzip, deflate, br, zstd',
-      'Upgrade-Insecure-Requests': '1'
+      'Accept-Encoding': encodings,
+      'Upgrade-Insecure-Requests': '1',
+      'Cache-Control': 'max-age=0',
+      'Priority': 'u=0, i'
     };
   }
 
@@ -396,7 +397,10 @@ const marketData = JSON.parse(
   fs.readFileSync(path.join(__dirname, 'update', 'market-data.json'), 'utf-8')
 );
 const ua = new UAGenerator(marketData);
-export const generate = ua.generate;
+export const generate = function(opts) {
+  return ua.generate(opts);
+}
+
 export default generate;
 
 function _main_() {
